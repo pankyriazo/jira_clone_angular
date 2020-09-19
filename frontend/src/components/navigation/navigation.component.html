@@ -1,0 +1,20 @@
+<nav class="flex h-full">
+    <div id="navbar__left" class="flex flex-col items-center w-20 py-6">
+        <div id="logo__jira" class="w-8 h-8 flex-grow-0 mb-6 cursor-pointer">
+            <img src="https://www.k15t.com/files/158505766/158512134/1/1544452301068/jsw_white.png" alt="Jira" class="w-full h-full">
+        </div>
+        <div id="actions" class="flex-grow flex flex-col justify-between">
+            <ng-container *ngFor="let actionsPosition of objectKeys(getNavbarLeftActions())">
+                <ul class="flex flex-col items-center" [ngClass]="'actions__' + actionsPosition">
+                    <ng-container *ngFor="let action of getNavbarLeftActions()[actionsPosition]">
+                        <li class="actions__action tooltip tooltip-md tooltip-right p-3 cursor-pointer" (click)="action.handler()">
+                            <clr-icon [attr.shape]="action.icon" [ngClass]="action.classes" class="is-inverse" size="28"></clr-icon>
+                            <span class="tooltip-content">{{ action.tooltip }}</span>
+                        </li>
+                    </ng-container>
+                </ul>
+            </ng-container>
+        </div>
+    </div>
+    <div class="navbar__right">RIGHT</div>
+</nav>

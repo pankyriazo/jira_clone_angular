@@ -1,5 +1,13 @@
-<h1 class="my-8 text-center text-6xl font-bold"><span class="text-teal-500">TailwindCSS</span> and <span class="text-red-600">Angular</span> is awesome!</h1>
-<p class="text-center text-3xl">Thanks for reading!</p>
-
-
-<router-outlet></router-outlet>
+<div class="app w-full h-full flex">
+    <!-- <div class="loader fixed inset-0 flex justify-center items-center" [ngClass]="{ 'active': projectQuery$.isLoading | async }">
+        <div class="loader__spinner spinner">Loading</div>
+    </div> -->
+    <app-navigation></app-navigation>
+    <div class="content">
+        <h1 class="my-8 text-center text-6xl font-bold"><span class="text-teal-500">TailwindCSS</span> and <span class="text-red-600">Angular</span> is awesome!</h1>
+        <p class="text-center text-3xl">Thanks for reading!</p>
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>
