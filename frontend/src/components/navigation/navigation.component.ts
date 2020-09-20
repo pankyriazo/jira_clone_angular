@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { navbarLeftActions } from 'src/config/navigation/navbarLeftActions';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-navigation',
@@ -7,13 +6,21 @@ import { navbarLeftActions } from 'src/config/navigation/navbarLeftActions';
     styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent {
-    public objectKeys = Object.keys;
+    @Input() navbarRightExpanded: boolean;
+    @Output() navbarRightManualToggle = new EventEmitter();
 
     constructor() {}
 
-    public getNavbarLeftActions() {
-        console.log(navbarLeftActions)
-        return navbarLeftActions;
+    public get navbarRightWidth() : number {
+        return this.navbarRightExpanded ? 330 : 18;
+    }
+
+    public get expandToggleIcon() : string {
+        return 'angle ' + (this.navbarRightExpanded ? 'left' : 'right');
+    }
+
+    public toggleNavbarRight(): void {
+        this.navbarRightManualToggle.emit();
     }
 
 }
