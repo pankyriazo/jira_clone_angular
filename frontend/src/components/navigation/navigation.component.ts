@@ -1,18 +1,35 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ProjectI } from 'src/interfaces/project';
+import { ProjectQuery } from 'src/state/project/project.query';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent {
-    @Input() navbarRightExpanded: boolean;
+export class NavigationComponent implements OnInit, OnDestroy {
+    @Input() public navbarRightExpanded: boolean;
     @Output() navbarRightManualToggle = new EventEmitter();
+    private projectSubscription: Subscription;
+    public project: ProjectI;
 
-    constructor() {}
+    constructor(
+        private projectQuery: ProjectQuery
+    ) { }
 
-    public get navbarRightWidth() : number {
-        return this.navbarRightExpanded ? 330 : 18;
+    ngOnInit() {
+        this.projectSubscription = this.projectQuery.select().pipe(
+                tap(project => {
+                    this.project = project;
+                })
+            )
+            .subscribe();
+    }
+
+    ngOnDestroy() {
+        this.projectSubscription.unsubscribe();
     }
 
     public get expandToggleIcon() : string {

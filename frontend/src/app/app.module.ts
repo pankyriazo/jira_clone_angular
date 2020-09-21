@@ -6,7 +6,10 @@ import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from 'src/components/navigation/navigation.component';
-import { CommonModule } from '@angular/common';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
+import { ProjectService } from 'src/state/project/project.service';
 
 @NgModule({
     declarations: [
@@ -15,12 +18,15 @@ import { CommonModule } from '@angular/common';
     ],
     imports: [
         BrowserModule,
-        CommonModule,
         AppRoutingModule,
         ClarityModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        HttpClientModule,
+        environment.production ? [] : AkitaNgDevtools.forRoot()
     ],
-    providers: [],
+    providers: [
+        ProjectService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

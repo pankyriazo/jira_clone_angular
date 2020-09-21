@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProjectService } from 'src/state/project/project.service';
+import { ProjectQuery } from 'src/state/project/project.query';
 
 @Component({
     selector: 'app-root',
@@ -8,7 +10,13 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
     public navbarRightExpanded: boolean;
 
+    constructor(
+        private projectService: ProjectService,
+        public projectQuery: ProjectQuery
+    ) {}
+
     ngOnInit() {
+        this.projectService.getProject();
         this.navbarRightExpanded = true;
         this.navbarRightHandleOnResize();
     }

@@ -5,6 +5,11 @@
 #navbar__right {
     background-color: #F0F2F4;
     transition: width 300ms cubic-bezier(0.2, 0, 0, 1) 0s;
+    width: 1rem;
+
+    &.expanded {
+        width: 16rem;
+    }
 
     #project__details,
     #navbar__right__actions {

@@ -1,4 +1,4 @@
-<nav class="flex h-full">
+<nav class="relative flex h-full">
     <div id="navbar__left" class="flex flex-col items-center w-16 py-6">
         <div id="logo__jira" class="w-8 h-8 flex-grow-0 mb-6 cursor-pointer">
             <img src="https://www.k15t.com/files/158505766/158512134/1/1544452301068/jsw_white.png" alt="Jira" class="w-full h-full">
@@ -34,7 +34,7 @@
             </ul>
         </div>
     </div>
-    <div id="navbar__right" class="flex flex-col overflow-x-hidden" [style.width.px]="navbarRightWidth">
+    <div id="navbar__right" class="flex flex-col overflow-x-hidden" [ngClass]="{ 'expanded': navbarRightExpanded }">
         <div id="project__details" class="flex items-center mx-6 mt-6">
             <div class="icon w-10 h-10">
                 <svg viewBox="0 0 256 270" xmlns="http://www.w3.org/2000/svg">
@@ -46,8 +46,8 @@
                 </svg>
             </div>
             <div class="details ml-3">
-                <h2 class="title font-bold m-0 leading-tight text-base">Jira Clone in Angular</h2>
-                <h3 class="category font-bold opacity-50">Software Project</h3>
+                <h2 class="title font-bold m-0 leading-tight text-base">{{ project.name }}</h2>
+                <h3 class="category font-bold opacity-50">{{ project.category }}</h3>
             </div>
         </div>
         <div id="navbar__right__actions" class="flex-grow flex flex-col justify-between mx-6 mt-4">
