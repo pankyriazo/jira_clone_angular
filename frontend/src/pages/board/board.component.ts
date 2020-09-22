@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProjectI } from 'src/interfaces/project';
-import { IssueList, IssueI } from 'src/interfaces/issue';
+import { IssueList, IssuePriorityIcons, IssuePriorityColors, IssueCategoryIcons, IssueCategoryColors } from 'src/interfaces/issue';
 import { ProjectQuery } from 'src/state/project/project.query';
-import { Subscription, Observable, of, concat, combineLatest } from 'rxjs';
-import { tap, finalize, mergeMap, map } from 'rxjs/operators';
+import { Subscription, Observable, of, combineLatest } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
+import { NavbarQuery } from 'src/state/navbar/navbar.query';
+import { NavbarService } from 'src/state/navbar/navbar.service';
 
 @Component({
     selector: 'app-board',
@@ -14,14 +16,20 @@ import { tap, finalize, mergeMap, map } from 'rxjs/operators';
     }
 })
 export class BoardComponent implements OnInit, OnDestroy {
+    public issuePriorityIcons = IssuePriorityIcons;
+    public issuePriorityColors = IssuePriorityColors;
+    public issueCategoryIcons = IssueCategoryIcons;
+    public issueCategoryColors = IssueCategoryColors;
+
     private projectSubscription: Subscription;
     public project: ProjectI;
-    // public issues$: Observable<{ title: string, issues: IssueI[] }[]>;
     public issues$: Observable<any[]>;
     public topBarFilterSearch: string;
 
     constructor(
-        private projectQuery: ProjectQuery
+        private projectQuery: ProjectQuery,
+        public navbarQuery: NavbarQuery,
+        public navbarService: NavbarService
     ) { }
 
     ngOnInit() {
@@ -35,10 +43,10 @@ export class BoardComponent implements OnInit, OnDestroy {
                 of(Object.values(IssueList)),
                 this.projectQuery.issues$,
             ).pipe(
-                map((x) => {
-                    return x[0].map(listTitle => ({
-                        listTitle,
-                        issues: x[1].filter(issue => issue.list === listTitle)
+                map(([lists, issues]) => {
+                    return lists.map(title => ({
+                        title,
+                        issues: issues.filter(issue => issue.list === title).sort((a, b) => (+a.listPosition) - (+b.listPosition))
                     }));
                 })
             );

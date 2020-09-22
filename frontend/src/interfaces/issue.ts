@@ -1,16 +1,10 @@
 import { CommentI } from 'src/interfaces/comment';
 
 export enum IssueList {
-    TODO = 'TODO',
+    TODO = 'TO DO',
     IN_PROGRESS = 'IN PROGRESS',
     CODE_REVIEW = 'CODE REVIEW',
     DONE = 'DONE'
-}
-
-export enum IssueCategory {
-    TASK = 'Task',
-    BUG = 'Bug',
-    WIKI = 'Wiki'
 }
 
 export enum IssuePriority {
@@ -21,12 +15,38 @@ export enum IssuePriority {
     HIGHEST = 'Highest'
 }
 
+export const IssuePriorityIcons = {
+    [IssuePriority.HIGHEST]: 'angle-double',
+    [IssuePriority.HIGH]: 'angle-double',
+    [IssuePriority.MEDIUM]: 'angle',
+    [IssuePriority.LOW]: 'exclamation-circle',
+    [IssuePriority.LOWEST]: 'exclamation-circle'
+};
+
 export const IssuePriorityColors = {
-    [IssuePriority.HIGHEST]: '#CD1317',
-    [IssuePriority.HIGH]: '#E9494A',
-    [IssuePriority.MEDIUM]: '#E97F33',
-    [IssuePriority.LOW]: '#2D8738',
-    [IssuePriority.LOWEST]: '#57A55A'
+    [IssuePriority.HIGHEST]: '#FB0800',
+    [IssuePriority.HIGH]: '#FCA502',
+    [IssuePriority.MEDIUM]: '#FCA502',
+    [IssuePriority.LOW]: '#FCA502',
+    [IssuePriority.LOWEST]: '#999'
+};
+
+export enum IssueCategory {
+    TASK = 'Task',
+    BUG = 'Bug',
+    WIKI = 'Wiki'
+}
+
+export const IssueCategoryIcons = {
+    [IssueCategory.TASK]: 'tasks',
+    [IssueCategory.BUG]: 'bug',
+    [IssueCategory.WIKI]: 'file'
+};
+
+export const IssueCategoryColors = {
+    [IssueCategory.TASK]: '#CD1317',
+    [IssueCategory.BUG]: '#E97F33',
+    [IssueCategory.WIKI]: '#57A55A'
 };
 
 export interface IssueI {

@@ -1,5 +1,5 @@
 <div id="app" class="flex">
-    <app-navigation [navbarRightExpanded]="navbarRightExpanded" (navbarRightManualToggle)="navbarRightManualToggle()"></app-navigation>
+    <app-navigation></app-navigation>
     <main class="w-full min-h-full -ml-4">
         <div id="loader" class="fixed top-0 right-0 h-full flex items-center justify-center z-10" [ngClass]="{ 'loading': projectQuery.isLoading$ | async }">
             <span id="loader__spinner" class="spinner spinner-inline"></span>

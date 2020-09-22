@@ -1,17 +1,18 @@
 <nav class="relative flex h-full">
     <div id="navbar__left" class="flex flex-col items-center w-16 py-6">
-        <div id="logo__jira" class="w-8 h-8 flex-grow-0 mb-6 cursor-pointer">
+        <div id="logo__jira" class="w-8 h-8 flex-grow-0 mb-6 cursor-pointer tooltip tooltip-md tooltip-right">
             <img src="https://www.k15t.com/files/158505766/158512134/1/1544452301068/jsw_white.png" alt="Jira" class="w-full h-full">
+            <span class="tooltip-content">{{ project.name }}</span>
         </div>
         <div id="navbar__left__actions" class="flex-grow flex flex-col justify-between">
             <ul class="actions__top flex flex-col items-center">
-                <li class="actions__action tooltip tooltip-sm tooltip-right p-3 cursor-pointer">
+                <li class="actions__action tooltip tooltip-sm tooltip-right p-3 cursor-pointer rounded-full hover:bg-opacity-25 hover:bg-blue-600">
                     <div class="icon">
                         <clr-icon shape="search" class="is-inverse" size="28"></clr-icon>
                     </div>
                     <span class="tooltip-content">Search issues</span>
                 </li>
-                <li class="actions__action tooltip tooltip-sm tooltip-right p-3 cursor-pointer">
+                <li class="actions__action tooltip tooltip-sm tooltip-right p-3 cursor-pointer rounded-full hover:bg-opacity-25 hover:bg-blue-600">
                     <div class="icon">
                         <clr-icon shape="plus" class="is-inverse" size="28"></clr-icon>
                     </div>
@@ -19,13 +20,13 @@
                 </li>
             </ul>
             <ul class="actions__bottom flex flex-col items-center">
-                <li class="actions__action tooltip tooltip-xs tooltip-right p-3 cursor-pointer">
+                <li class="actions__action tooltip tooltip-xs tooltip-right p-3 cursor-pointer rounded-full hover:bg-opacity-25 hover:bg-blue-600">
                     <div class="icon">
                         <clr-icon shape="help" class="is-inverse is-solid" size="28"></clr-icon>
                     </div>
                     <span class="tooltip-content">About</span>
                 </li>
-                <li class="actions__action tooltip tooltip-md tooltip-right p-3 cursor-pointer">
+                <li class="actions__action tooltip tooltip-md tooltip-right p-1 m-2 cursor-pointer rounded-full hover:bg-opacity-75 hover:bg-blue-300">
                     <div class="icon rounded-full overflow-hidden">
                         <img src="https://avatars1.githubusercontent.com/u/25479457?s=460&u=7324d23b652ee6edec65add59033423fe21aacb7&v=4" alt="Panagiotis Kyriazopoulos">
                     </div>
@@ -34,7 +35,7 @@
             </ul>
         </div>
     </div>
-    <div id="navbar__right" class="flex flex-col overflow-x-hidden" [ngClass]="{ 'expanded': navbarRightExpanded }">
+    <div id="navbar__right" class="flex flex-col overflow-x-hidden" [ngClass]="{ 'expanded': navbarQuery.isExpanded$ | async }">
         <div id="project__details" class="flex items-center mx-6 mt-6">
             <div class="icon w-10 h-10">
                 <svg viewBox="0 0 256 270" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +74,7 @@
     </div>
     <div id="expand__toggle" class="relative w-4 h-full border-l-2 border-solid border-gray-300 hover:border-blue-600 cursor-col-resize" (click)="toggleNavbarRight()">
         <div class="icon relative top-8 -left-3 bg-white rounded-full shadow w-6 h-6 flex items-center justify-center cursor-pointer hover:shadow-outline">
-            <clr-icon [attr.shape]="expandToggleIcon" size="16"></clr-icon>
+            <clr-icon [attr.shape]="expandToggleIcon | async" size="16"></clr-icon>
         </div>
     </div>
 </nav>

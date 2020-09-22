@@ -1,1 +1,37 @@
-<p>settings works!</p>
+<div id="settings" class="w-full h-full flex flex-col">
+    <h1 class="mt-8 mx-8 leading-tight text-2xl font-bold">Project Settings</h1>
+    <section id="settings__content" class="mt-8 p-8">
+        <form class="clr-form clr-form-compact" [formGroup]="form" (submit)="save()">
+
+            <div id="form__name" class="clr-form-control">
+                <label for="form__name_input" class="clr-control-label">Name</label>
+                <div class="clr-control-container" [ngClass]="{ 'clr-error': (form.get('name').dirty && form.get('name').invalid) }">
+                    <div class="clr-input-wrapper">
+                        <input type="text" id="form__name_input" title="Project name" placeholder="Project Name" class="clr-input" formControlName="name" />
+                        <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="clr-subtext" [style.visibility]="(form.get('name').dirty && form.get('name').invalid) ? 'visible' : 'hidden'">Required</span>
+                </div>
+            </div>
+
+            <div id="form__category" class="clr-form-control">
+                <label for="form__category_input" class="clr-control-label">Category</label>
+                <div class="clr-control-container" [ngClass]="{ 'clr-error': (form.get('category').dirty && form.get('category').invalid) }">
+                    <div class="clr-select-wrapper">
+                        <select id="form__category_input" class="clr-select" title="Project category" formControlName="category">
+                            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                        </select>
+                        <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="clr-subtext" [style.visibility]="(form.get('category').dirty && form.get('category').invalid) ? 'visible' : 'hidden'">Required</span>
+                </div>
+            </div>
+
+            <div class="buttons mt-12">
+                <button type="submit" class="btn btn-primary" [disabled]="form.pristine || form.invalid" title="Save">Save</button>
+                <button type="button" class="btn btn-link" [routerLink]="['/board']" title="Cancel">Cancel</button>
+            </div>
+
+        </form>
+    </section>
+</div>
