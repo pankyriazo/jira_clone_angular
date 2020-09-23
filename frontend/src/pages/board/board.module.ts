@@ -4,6 +4,7 @@ import { BoardComponent } from './board.component';
 import { BoardRoutingModule } from './board-routing.module';
 import { FormsModule } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -15,7 +16,8 @@ import { ClarityModule } from '@clr/angular';
         CommonModule,
         BoardRoutingModule,
         FormsModule,
-        ClarityModule
+        ClarityModule,
+        DragDropModule
     ]
 })
 export class BoardModule { }

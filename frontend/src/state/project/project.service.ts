@@ -4,6 +4,8 @@ import { ProjectStore } from './project.store';
 import { tap, catchError, delay, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProjectI } from 'src/interfaces/project';
+import { IssueI } from 'src/interfaces/issue';
+import { arrayUpsert } from '@datorama/akita';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
@@ -46,5 +48,16 @@ export class ProjectService {
                 ...project
             }
         });
+    }
+
+    public updateIssue(issue: IssueI): void {
+        issue.updatedAt = new Date().toISOString();
+        this.projectStore.update(state => {
+            const newIssues: IssueI[] = arrayUpsert(state.issues, issue.id, issue);
+            return {
+                ...state,
+                issues: newIssues
+            };
+        })
     }
 }
