@@ -14,23 +14,30 @@
     </section>
     <section id="board__issues" class="flex overflow-x-auto" [ngClass]="{ 'expanded': !(navbarQuery.isExpanded$ | async) }">
         <ul cdkDropListGroup class="flex p-8">
-            <li *ngFor="let list of issues$ | async" class="list flex flex-col">
+            <li *ngFor="let list of issueLists$ | async" class="list flex flex-col">
                 <div class="list_header bg-white px-3 py-2 flex">
                     <h4 class="list_title text-xs font-bold text-black inline-block">{{ list.title }}</h4>
                     <span class="list_issues ml-2 text-xs text-gray-700 font-light">{{ list.issues.length }}</span>
                 </div>
                 <ul cdkDropList [id]="list.title" [cdkDropListData]="list.issues" (cdkDropListDropped)="drop($event)" class="list_issues flex-grow flex flex-col m-0 p-2">
-                    <li *ngFor="let issue of list.issues" cdkDrag [cdkDragData]="issue" class="issue list-none bg-white m-0 p-2 shadow cursor-move border-solid border-2 border-transparent hover:border-gray-400">
+                    <li *ngFor="let issue of list.issues" cdkDrag [cdkDragData]="issue" class="issue list-none bg-white m-0 p-2 shadow cursor-move border-solid border-2 border-transparent hover:border-gray-400 hover:bg-gray-100">
                         <div class="issue__drag_placeholder border-dashed border-gray-400 bg-gray-300 shadow" *cdkDragPlaceholder></div>
-                        <h5 class="issue_title text-sm text-gray-900 cursor-pointer hover:underline">{{ issue.title }}</h5>
-                        <div class="issue_metadata mt-3 flex">
-                            <div class="issue_priority mr-2 tooltip tooltip-sm tooltip-bottom-right" [ngClass]="'issue_priority_' + issue.priority.toLowerCase()">
-                                <clr-icon class="is-solid" size="22" [attr.shape]="issuePriorityIcons[issue.priority]" [style.color]="issuePriorityColors[issue.priority]"></clr-icon>
-                                <span class="tooltip-content">{{ issue.priority }}</span>
+                        <h5 class="issue_title text-sm text-gray-900 cursor-pointer hover:underline" (click)="issueEditComponent.open(issue)">{{ issue.title }}</h5>
+                        <div class="issue_details mt-3 flex items-center justify-between">
+                            <div *ngIf="getIssueReporter$(issue) | async as reporter" class="reporter_icon tooltip tooltip-md tooltip-bottom-right">
+                                <img class="rounded-full w-6 h-6 border border-solid border-white shadow" [src]="reporter.avatarUrl" [alt]="reporter.name">
+                                <span class="tooltip-content">{{ reporter.name }}</span>
                             </div>
-                            <div class="issue_category tooltip tooltip-sm tooltip-bottom-right" [ngClass]="'issue_category_' + issue.category.toLowerCase()">
-                                <clr-icon class="is-solid opacity-50" size="22" [attr.shape]="issueCategoryIcons[issue.category]" [style.color]="issueCategoryColors[issue.category]"></clr-icon>
-                                <span class="tooltip-content">{{ issue.category }}</span>
+
+                            <div class="issue_metadata">
+                                <div class="issue_category mr-2 tooltip tooltip-sm tooltip-bottom-right" [ngClass]="'issue_category_' + issue.category.toLowerCase()">
+                                    <clr-icon size="22" [attr.shape]="issueCategoryIcons[issue.category]" [style.color]="issueCategoryColors[issue.category]" class="is-solid opacity-75"></clr-icon>
+                                    <span class="tooltip-content">{{ issue.category }}</span>
+                                </div>
+                                <div class="issue_priority tooltip tooltip-sm tooltip-bottom-right" [ngClass]="'issue_priority_' + issue.priority.toLowerCase()">
+                                    <clr-icon size="22" [attr.shape]="issuePriorityIcons[issue.priority]" [style.color]="issuePriorityColors[issue.priority]" class="is-solid"></clr-icon>
+                                    <span class="tooltip-content">{{ issue.priority }}</span>
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -39,3 +46,5 @@
         </ul>
     </section>
 </div>
+
+<app-issue-edit></app-issue-edit>

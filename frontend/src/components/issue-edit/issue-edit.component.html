@@ -1,0 +1,63 @@
+<clr-modal id="issue_edit_modal" [(clrModalOpen)]="isOpen" [clrModalStaticBackdrop]="false" [clrModalSize]="'xl'">
+    <div class="modal-body">
+        <form [formGroup]="form" class="clr-form" (submit)="save()">
+            <div id="issue_edit__title" class="clr-form-control">
+                <div class="clr-control-container" [ngClass]="{ 'clr-error': (form.get('title').dirty && form.get('title').invalid) }">
+                    <div class="clr-input-wrapper">
+                        <input clrInput type="text" formControlName="title" class="text-lg font-bold border-0 w-full" />
+                        <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="clr-subtext" [style.visibility]="(form.get('title').dirty && form.get('title').invalid) ? 'visible' : 'hidden'">Required</span>
+                </div>
+            </div>
+
+            <div id="issue_edit__category" class="clr-form-control">
+                <label for="issue_edit__category__select" class="clr-control-label">Category</label>
+                <div class="clr-control-container" [ngClass]="{ 'clr-error': (form.get('category').dirty && form.get('category').invalid) }">
+                    <div class="clr-select-wrapper">
+                        <select id="issue_edit__category__select" class="clr-select" title="Issue category" formControlName="category">
+                            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                        </select>
+                        <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="clr-subtext" [style.visibility]="(form.get('category').dirty && form.get('category').invalid) ? 'visible' : 'hidden'">Required</span>
+                </div>
+            </div>
+
+            <div id="issue_edit__reporter" class="clr-form-control">
+                <label for="issue_edit__reporter__select" class="clr-control-label">Reporter</label>
+                <div class="clr-control-container" [ngClass]="{ 'clr-error': (form.get('reporter').dirty && form.get('reporter').invalid) }">
+                    <div class="clr-select-wrapper">
+                        <select id="issue_edit__reporter__select" class="clr-select" title="Issue reporter" formControlName="reporter">
+                            <option *ngFor="let user of (projectQuery.users$ | async)" [value]="user.id">{{ user.name }}</option>
+                        </select>
+                        <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="clr-subtext" [style.visibility]="(form.get('reporter').dirty && form.get('reporter').invalid) ? 'visible' : 'hidden'">Required</span>
+                </div>
+            </div>
+
+            <clr-tabs>
+                <clr-tab>
+                    <button clrTabLink>Description</button>
+                    <clr-tab-content>
+                        <quill-editor formControlName="description" trackChanges="all" [modules]="quillModules" (onEditorCreated)="addBindingCreated($event)"></quill-editor>
+                    </clr-tab-content>
+                </clr-tab>
+                <clr-tab>
+                    <button clrTabLink>Preview</button>
+                    <clr-tab-content *clrIfActive="true">
+                        <quill-view-html [content]="form.get('description').value" theme="snow"></quill-view-html>
+                    </clr-tab-content>
+                </clr-tab>
+            </clr-tabs>
+
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</clr-modal>
+

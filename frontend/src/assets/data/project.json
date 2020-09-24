@@ -9,27 +9,27 @@
     "users": [
         {
             "id": "0",
-            "name": "Trung Vo",
-            "avatarUrl": "https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1593253478/trung-vo_bioxmc.png"
+            "name": "Panagiotis Kyriazopoulos",
+            "avatarUrl": "https://avatars1.githubusercontent.com/u/25479457?s=460&u=7324d23b652ee6edec65add59033423fe21aacb7&v=4"
         },
         {
             "id": "1",
-            "name": "Iron Man",
+            "name": "Coworker 1",
             "avatarUrl": "https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1592405732/ironman_c3jrbc.jpg"
         },
         {
             "id": "2",
-            "name": "Captain",
+            "name": "Coworker 2",
             "avatarUrl": "https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1592405732/captain_e8s9nk.jpg"
         },
         {
             "id": "3",
-            "name": "Thor",
+            "name": "Coworker 3",
             "avatarUrl": "https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1592405731/thor_juqwzf.jpg"
         },
         {
             "id": "4",
-            "name": "Spider Man",
+            "name": "Coworker 4",
             "avatarUrl": "https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1592405731/spiderman_zlrtx0.jpg"
         }
     ],
@@ -50,7 +50,7 @@
         {
             "id": "1",
             "list": "TO DO",
-            "category": "Wiki",
+            "category": "Feature",
             "listPosition": 2,
             "priority": "Medium",
             "title": "What is Angular Jira clone application?",
@@ -63,7 +63,7 @@
         {
             "id": "2",
             "list": "IN PROGRESS",
-            "category": "Wiki",
+            "category": "Bug",
             "listPosition": 1,
             "priority": "High",
             "title": "How to build Jira clone 😍? Follow these tutorials from its author",
@@ -84,7 +84,7 @@
             "createdAt": "2020-06-12T14:40:01.262Z",
             "updatedAt": "2020-06-12T14:40:01.262Z",
             "reporterId": "4",
-            "userIds": ["3, 4"]
+            "userIds": ["3", "4"]
         }
     ]
 }

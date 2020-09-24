@@ -1,5 +1,3 @@
-import { CommentI } from 'src/interfaces/comment';
-
 export enum IssueList {
     TODO = 'TO DO',
     IN_PROGRESS = 'IN PROGRESS',
@@ -19,7 +17,7 @@ export const IssuePriorityIcons = {
     [IssuePriority.HIGHEST]: 'angle-double',
     [IssuePriority.HIGH]: 'angle-double',
     [IssuePriority.MEDIUM]: 'angle',
-    [IssuePriority.LOW]: 'exclamation-circle',
+    [IssuePriority.LOW]: 'angle',
     [IssuePriority.LOWEST]: 'exclamation-circle'
 };
 
@@ -27,26 +25,26 @@ export const IssuePriorityColors = {
     [IssuePriority.HIGHEST]: '#FB0800',
     [IssuePriority.HIGH]: '#FCA502',
     [IssuePriority.MEDIUM]: '#FCA502',
-    [IssuePriority.LOW]: '#FCA502',
+    [IssuePriority.LOW]: '#999',
     [IssuePriority.LOWEST]: '#999'
 };
 
 export enum IssueCategory {
     TASK = 'Task',
     BUG = 'Bug',
-    WIKI = 'Wiki'
+    FEATURE = 'Feature'
 }
 
 export const IssueCategoryIcons = {
     [IssueCategory.TASK]: 'tasks',
-    [IssueCategory.BUG]: 'bug',
-    [IssueCategory.WIKI]: 'file'
+    [IssueCategory.BUG]: 'dot-circle',
+    [IssueCategory.FEATURE]: 'plus-circle'
 };
 
 export const IssueCategoryColors = {
-    [IssueCategory.TASK]: '#CD1317',
-    [IssueCategory.BUG]: '#E97F33',
-    [IssueCategory.WIKI]: '#57A55A'
+    [IssueCategory.TASK]: '#569924',
+    [IssueCategory.BUG]: '#ff0000',
+    [IssueCategory.FEATURE]: '#007dff'
 };
 
 export interface IssueI {
@@ -64,5 +62,5 @@ export interface IssueI {
     updatedAt: string;
     reporterId: string;
     userIds: string[];
-    comments: CommentI[];
 }
+

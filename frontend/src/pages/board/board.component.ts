@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ProjectI } from 'src/interfaces/project';
+import { UserI } from 'src/interfaces/user';
 import { IssueList, IssuePriorityIcons, IssuePriorityColors, IssueCategoryIcons, IssueCategoryColors, IssueI } from 'src/interfaces/issue';
 import { ProjectQuery } from 'src/state/project/project.query';
 import { Subscription, Observable, of, combineLatest } from 'rxjs';
@@ -8,6 +9,7 @@ import { NavbarQuery } from 'src/state/navbar/navbar.query';
 import { NavbarService } from 'src/state/navbar/navbar.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ProjectService } from 'src/state/project/project.service';
+import { IssueEditComponent } from 'src/components/issue-edit/issue-edit.component';
 
 @Component({
     selector: 'app-board',
@@ -25,14 +27,15 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     private projectSubscription: Subscription;
     public project: ProjectI;
-    public issues$: Observable<any[]>;
+    public issueLists$: Observable<{ title: string, issues: IssueI[] }[]>;
     public topBarFilterSearch: string;
+    @ViewChild(IssueEditComponent) public issueEditComponent: IssueEditComponent;
 
     constructor(
         private projectQuery: ProjectQuery,
         private projectService: ProjectService,
         public navbarQuery: NavbarQuery,
-        public navbarService: NavbarService
+        public navbarService: NavbarService,
     ) { }
 
     ngOnInit() {
@@ -42,22 +45,32 @@ export class BoardComponent implements OnInit, OnDestroy {
                 })
             ).subscribe();
 
-        this.issues$ = combineLatest(
-                of(Object.values(IssueList)),
-                this.projectQuery.issues$,
-            ).pipe(
-                map(([lists, issues]) => {
-                    return lists.map(title => ({
-                        title,
-                        issues: issues.filter(issue => issue.list === title).sort((a, b) => (+a.listPosition) - (+b.listPosition))
-                    }));
-                })
-            );
+        this.issueLists$ = combineLatest(
+                            of(Object.values(IssueList)),
+                            this.projectQuery.issues$,
+                        ).pipe(
+                            map(([lists, issues]) => {
+                                return lists.map(title => ({
+                                    title,
+                                    issues: issues
+                                                .filter(issue => issue.list === title)
+                                                .sort((a, b) => (+a.listPosition) - (+b.listPosition))
+                                }));
+                            })
+                        );
     }
 
     ngOnDestroy() {
         this.projectSubscription.unsubscribe();
     }
+
+
+    public getIssueReporter$(issue: IssueI): Observable<UserI> {
+        return this.projectQuery.users$.pipe(
+            map(users => users.find(user => issue.userIds.includes(user.id)))
+        )
+    }
+
 
     public drop(event: CdkDragDrop<IssueI[]>): void {
         const newIssues: IssueI[] = [...event.container.data];
