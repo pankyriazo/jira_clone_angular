@@ -1,11 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProjectService } from 'src/state/project/project.service';
-import { ProjectQuery } from 'src/state/project/project.query';
-import { NavbarQuery } from 'src/state/navbar/navbar.query';
-import { NavbarService } from 'src/state/navbar/navbar.service';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ProjectService } from 'src/app/state/project/project.service';
+import { ProjectQuery } from 'src/app/state/project/project.query';
+import { NavbarQuery } from 'src/app/state/navbar/navbar.query';
+import { NavbarService } from 'src/app/state/navbar/navbar.service';
 import { Title } from '@angular/platform-browser';
 import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { IssueEditComponent } from 'src/app/components/issue-edit/issue-edit.component';
+import { IssueCreateComponent } from 'src/app/components/issue-create/issue-create.component';
+import { ModalService } from './providers/modal.service';
+import { IssueI } from './interfaces/issue';
+import { SearchService } from './providers/search.service';
+import { SearchComponent } from './components/search/search.component';
 
 @Component({
     selector: 'app-root',
@@ -15,11 +21,17 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
     private titleSubscription: Subscription;
 
+    @ViewChild(IssueEditComponent) public issueEditComponent: IssueEditComponent;
+    @ViewChild(IssueCreateComponent) public issueCreateComponent: IssueCreateComponent;
+    @ViewChild(SearchComponent) public searchComponent: SearchComponent;
+
     constructor(
         private projectService: ProjectService,
         public projectQuery: ProjectQuery,
         public navbarQuery: NavbarQuery,
         public navbarService: NavbarService,
+        private modalService: ModalService,
+        private searchService: SearchService,
         public title: Title
     ) {}
 
@@ -29,6 +41,18 @@ export class AppComponent implements OnInit, OnDestroy {
         this.titleSubscription = this.projectQuery.all$.pipe(
             tap(project => this.title.setTitle(project.name || 'Loading...'))
         ).subscribe();
+
+        this.modalService.issueEditSubject.subscribe(
+            (issue: IssueI) => this.issueEditComponent.open(issue)
+        )
+
+        this.modalService.issueCreateSubject.subscribe(
+            () => this.issueCreateComponent.open()
+        )
+
+        this.searchService.searchSubject.subscribe(
+            () => this.searchComponent.open()
+        )
     }
 
     ngOnDestroy() {
@@ -41,6 +65,10 @@ export class AppComponent implements OnInit, OnDestroy {
                 expanded: e.matches
             });
         });
+    }
+
+    public issueCreate(): void {
+        this.issueCreateComponent.open();
     }
 
 }

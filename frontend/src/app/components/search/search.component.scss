@@ -1,0 +1,34 @@
+#search {
+    visibility: hidden;
+    transition: visibility .3s cubic-bezier(.7,.3,.1,1);
+
+    &.open {
+        visibility: visible;
+    }
+}
+
+#search__overlay {
+    background-color: rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+
+    #search.open & {
+        opacity: 1;
+    }
+}
+
+#search__container {
+    box-shadow: 6px 0 16px -8px rgba(0,0,0,.08), 9px 0 28px 0 rgba(0,0,0,.05), 12px 0 48px 16px rgba(0,0,0,.03);
+    transform: translateX(-24rem);
+    transition: transform .3s cubic-bezier(.7,.3,.1,1), box-shadow .3s cubic-bezier(.7,.3,.1,1);
+    width: 24rem;
+
+    #search.open & {
+        transform: translateX(0);
+    }
+}
+
+input {
+    height: auto;
+    max-height: none;
+}

@@ -1,0 +1,20 @@
+<div id="search" class="fixed top-0 left-0 w-full h-full z-10" [ngClass]="{ 'open': isOpen }">
+    <div id="search__overlay" class="absolute top-0 left-0 w-full h-full" (click)="reset()"></div>
+    <div id="search__container" class="relative top-0 left-0 h-full bg-white p-6">
+        <div id="search__input_container" class="relative flex items-center">
+            <input type="text" placeholder="Search Issues" class="clr-input relative text-lg p-2 pl-8 w-full" #searchInput>
+            <clr-icon size="22" shape="search" class="absolute left-0 text-gray-800"></clr-icon>
+        </div>
+        <div id="search__results" class="mt-8">
+            <h3 class="font-bold text-xs text-gray-500 mb-4">{{ searchResults === undefined ? 'RECENT ISSUES' : 'SEARCH RESULTS' }}</h3>
+            <ul>
+                <li *ngFor="let issue of (searchResults === undefined ? (recentIssues$ | async) : searchResults)" class="cursor-pointer bg-white hover:bg-gray-200 flex items-center mb-2" (click)="openIssue(issue)">
+                     <div class="issue__category m-2">
+                         <clr-icon size="28" [attr.shape]="issueCategoryIcons[issue.category]" [style.color]="issueCategoryColors[issue.category]" class="is-solid opacity-75"></clr-icon>
+                     </div>
+                     <div class="issue__title text-black text-md">{{ issue.title }}</div>
+                </li>
+             </ul>
+        </div>
+    </div>
+</div>

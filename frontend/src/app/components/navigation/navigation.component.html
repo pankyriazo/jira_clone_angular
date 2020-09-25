@@ -1,0 +1,80 @@
+<nav class="relative flex h-full z-10">
+    <div id="navbar__left" class="flex flex-col items-center w-16 py-6">
+        <div id="logo__jira" class="w-8 h-8 flex-grow-0 mb-6 cursor-pointer tooltip tooltip-md tooltip-right">
+            <img src="https://www.k15t.com/files/158505766/158512134/1/1544452301068/jsw_white.png" alt="Jira" class="w-full h-full">
+            <span class="tooltip-content">{{ project.name }}</span>
+        </div>
+        <div id="navbar__left__actions" class="flex-grow flex flex-col justify-between">
+            <ul class="actions__top flex flex-col items-center">
+                <li class="actions__action tooltip tooltip-sm tooltip-right p-3 cursor-pointer rounded-full hover:bg-opacity-25 hover:bg-blue-600" (click)="searchService.searchSubject.next()">
+                    <div class="icon">
+                        <clr-icon shape="search" class="is-inverse" size="28"></clr-icon>
+                    </div>
+                    <span class="tooltip-content">Search issues</span>
+                </li>
+                <li class="actions__action tooltip tooltip-sm tooltip-right p-3 cursor-pointer rounded-full hover:bg-opacity-25 hover:bg-blue-600" (click)="modalService.issueCreateSubject.next()">
+                    <div class="icon">
+                        <clr-icon shape="plus" class="is-inverse" size="28"></clr-icon>
+                    </div>
+                    <span class="tooltip-content">Create issue</span>
+                </li>
+            </ul>
+            <ul class="actions__bottom flex flex-col items-center">
+                <li class="actions__action tooltip tooltip-xs tooltip-right p-3 cursor-pointer rounded-full hover:bg-opacity-25 hover:bg-blue-600">
+                    <div class="icon">
+                        <clr-icon shape="help" class="is-inverse is-solid" size="28"></clr-icon>
+                    </div>
+                    <span class="tooltip-content">About</span>
+                </li>
+                <li class="actions__action tooltip tooltip-md tooltip-right p-1 m-2 cursor-pointer rounded-full hover:bg-opacity-75 hover:bg-blue-300">
+                    <div class="icon rounded-full overflow-hidden">
+                        <img src="https://avatars1.githubusercontent.com/u/25479457?s=460&u=7324d23b652ee6edec65add59033423fe21aacb7&v=4" alt="Panagiotis Kyriazopoulos">
+                    </div>
+                    <span class="tooltip-content">Panagiotis Kyriazopoulos</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="navbar__right" class="flex flex-col overflow-x-hidden" [ngClass]="{ 'expanded': navbarQuery.isExpanded$ | async }">
+        <div id="project__details" class="flex items-center mx-6 mt-6">
+            <div class="icon w-10 h-10">
+                <svg viewBox="0 0 256 270" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M127.606.341L.849 44.95 20.88 211.022l106.86 58.732 107.412-59.528L255.175 44.16 127.606.341z" fill="#B3B3B3"/>
+                    <path d="M242.532 53.758L127.31 14.466v241.256l96.561-53.441 18.66-148.523z" fill="#A6120D"/>
+                    <path d="M15.073 54.466l17.165 148.525 95.07 52.731V14.462L15.074 54.465z" fill="#DD1B16"/>
+                    <path d="M159.027 142.898L127.31 157.73H93.881l-15.714 39.305-29.228.54L127.31 23.227l31.717 119.672zm-3.066-7.467l-28.44-56.303-23.329 55.334h23.117l28.652.97z" fill="#F2F2F2"/>
+                    <path d="M127.309 23.226l.21 55.902 26.47 55.377h-26.62l-.06 23.189 36.81.035 17.204 39.852 27.967.518-81.981-174.873z" fill="#B3B3B3"/>
+                </svg>
+            </div>
+            <div class="details ml-3">
+                <h2 class="title font-bold m-0 leading-tight text-base">{{ project.name }}</h2>
+                <h3 class="category font-bold opacity-50">{{ project.category }}</h3>
+            </div>
+        </div>
+        <div id="navbar__right__actions" class="flex-grow flex flex-col justify-between mx-6 mt-4">
+            <ul class="flex flex-col mt-6">
+                <li class="actions__action">
+                    <a [routerLink]="'/board'" routerLinkActive="active" class="flex items-center hover:no-underline py-2 px-3">
+                        <div class="icon">
+                            <clr-icon shape="view-columns" size="32"></clr-icon>
+                        </div>
+                        <span class="ml-4 text-sm font-bold opacity-75">Dashboard</span>
+                    </a>
+                </li>
+                <li class="actions__action">
+                    <a [routerLink]="'/settings'" routerLinkActive="active" class="flex items-center hover:no-underline py-2 px-3">
+                        <div class="icon">
+                            <clr-icon shape="cog" class="is-solid" size="32"></clr-icon>
+                        </div>
+                        <span class="ml-4 text-sm font-bold opacity-75">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="expand__toggle" class="relative w-4 h-full border-l-2 border-solid border-gray-300 hover:border-blue-600 cursor-col-resize" (click)="toggleNavbarRight()">
+        <div class="icon relative top-8 -left-3 bg-white rounded-full shadow w-6 h-6 flex items-center justify-center cursor-pointer hover:shadow-outline">
+            <clr-icon [attr.shape]="expandToggleIcon | async" size="16"></clr-icon>
+        </div>
+    </div>
+</nav>
