@@ -1,5 +1,6 @@
 {
-    "name": "frontend",
+    "name": "jira_clone_angular",
+    "baseHref": "https://pkyriazo.github.io/jira_clone_angular/",
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
